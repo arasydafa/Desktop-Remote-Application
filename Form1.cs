@@ -74,7 +74,7 @@ namespace DesktopRemoteApplication
             {
                 if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(program)).Any(p => p.MainModule.FileName == program))
                 {
-                    statusStrip1.Items[0].Text = "Status: Application is already running";
+                    statusStrip.Items[0].Text = "Status: Application is already running";
                     MessageBox.Show("Application is already running");
                 }
                 else
@@ -92,7 +92,7 @@ namespace DesktopRemoteApplication
                         bool isRunning = Process.GetProcessesByName(processName).Any(p => p.MainModule.FileName == program);
                         if (isRunning)
                         {
-                            statusStrip1.Items[0].Text = "Status: Application '" + processName + "' Running";
+                            statusStrip.Items[0].Text = "Status: Application '" + processName + "' Running";
                         }
                         else
                         {
@@ -100,11 +100,11 @@ namespace DesktopRemoteApplication
 
                             if (allProcess.Length > 0)
                             {
-                                statusStrip1.Items[0].Text = "Status: Application '" + processName + "' Closed";
+                                statusStrip.Items[0].Text = "Status: Application '" + processName + "' Closed";
                             }
                             else
                             {
-                                statusStrip1.Items[0].Text = "Status: There is no application running";
+                                statusStrip.Items[0].Text = "Status: There is no application running";
                             }
                         }
                     };
@@ -201,6 +201,9 @@ namespace DesktopRemoteApplication
         private void receiveButton_Click(object sender, EventArgs e)
         {
             if (_isListening) return;
+
+            statusStrip.Items[1].Text = "Connection Status: Ready to receive UDP data";
+
             StartListening();
         }
 
