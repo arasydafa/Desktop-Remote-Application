@@ -23,7 +23,7 @@ namespace DesktopRemoteApplication
 {
     public partial class Form1 : Form
     {
-        /*#region Button Disable variable and Dependencies
+        #region Button Disable variable and Dependencies
         private static int WH_KEYBOARD_LL = 13;
         private static int WM_KEYDOWN = 0x0100;
         private static int WM_SYSKEYDOWN = 0x0104;
@@ -45,7 +45,7 @@ namespace DesktopRemoteApplication
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-        #endregion*/
+        #endregion
 
         #region Form Process Variable and Dependencies
         private bool _isRunning = false;
@@ -60,7 +60,7 @@ namespace DesktopRemoteApplication
         {
             InitializeComponent();
 
-            // _hookID = SetHook(_proc);
+            _hookID = SetHook(_proc);
         }
 
         private void StartProcess()
@@ -154,7 +154,7 @@ namespace DesktopRemoteApplication
         }
         #endregion
 
-        /*#region Button Disable
+        #region Button Disable
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
@@ -176,12 +176,12 @@ namespace DesktopRemoteApplication
                 return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
         }
-        #endregion*/
+        #endregion
 
         #region Form Event
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // UnhookWindowsHookEx(_hookID);
+            UnhookWindowsHookEx(_hookID);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
