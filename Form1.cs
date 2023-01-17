@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using Microsoft.Win32;
-using DevExpress.Internal;
-using System.Linq.Expressions;
 using System.Runtime.InteropServices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace DesktopRemoteApplication
 {
@@ -45,7 +36,7 @@ namespace DesktopRemoteApplication
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-        #endregion
+        #endregion Button Disable variable and Dependencies
 
         #region Form Process Variable and Dependencies
         private bool _isRunning = false;
@@ -53,46 +44,65 @@ namespace DesktopRemoteApplication
         private UdpClient _udpClient;
         private IPEndPoint _remoteEndPoint;
         private bool _isListening;
-        #endregion
+        #endregion Form Process Variable and Dependencies
 
-        #region Form Process 
+        #region Form Process
         public Form1()
         {
             InitializeComponent();
 
             _hookID = SetHook(_proc);
+
+            pathBox.KeyDown += pathBox_KeyDown;
         }
 
-        private void StartProcess()
+        private void StartProcess(params string[] ProcessArgs)
         {
             if (_isRunning) return;
             _isRunning = true;
 
-            var program = pathBox.Text.ToString();
+            var program1 = textBox1.Text.ToString();
+            var program2 = textBox2.Text.ToString();
+            var program3 = textBox3.Text.ToString();
 
             try
             {
-                if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(program)).Any(p => p.MainModule.FileName == program))
+                if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(program1)).Any(p => p.MainModule.FileName == program1) &&
+                    Process.GetProcessesByName(Path.GetFileNameWithoutExtension(program2)).Any(p => p.MainModule.FileName == program2) &&
+                    Process.GetProcessesByName(Path.GetFileNameWithoutExtension(program3)).Any(p => p.MainModule.FileName == program3))
                 {
-                    statusStrip.Items[0].Text = "Status: Application is already running";
+                    statusStrip1.Items[0].Text = "Status: Application is already running";
                     MessageBox.Show("Application is already running");
                 }
                 else
                 {
-                    using (var process = new Process())
+                    using (var process1 = new Process())
                     {
-                        process.StartInfo = new ProcessStartInfo(program);
-                        process.Start();
+                        process1.StartInfo = new ProcessStartInfo(program1);
+                        process1.Start();
+                    }
+                    using (var process2 = new Process())
+                    {
+                        process2.StartInfo = new ProcessStartInfo(program2);
+                        process2.Start();
+                    }
+                    using (var process3 = new Process())
+                    {
+                        process3.StartInfo = new ProcessStartInfo(program3);
+                        process3.Start();
                     }
 
-                    string processName = Path.GetFileNameWithoutExtension(program);
-                    processChecker.Interval = 100;
-                    processChecker.Tick += (s, eventArgs) =>
+                    string processName1 = Path.GetFileNameWithoutExtension(program1);
+                    string processName2 = Path.GetFileNameWithoutExtension(program2);
+                    string processName3 = Path.GetFileNameWithoutExtension(program3);
+
+                    processChecker1.Interval = 100;
+                    processChecker1.Tick += (s, eventArgs) =>
                     {
-                        bool isRunning = Process.GetProcessesByName(processName).Any(p => p.MainModule.FileName == program);
+                        bool isRunning = Process.GetProcessesByName(processName1).Any(p => p.MainModule.FileName == program1);
                         if (isRunning)
                         {
-                            statusStrip.Items[0].Text = "Status: Application '" + processName + "' Running";
+                            statusStrip1.Items[0].Text = "Status: Application '" + processName1 + "' Running";
                         }
                         else
                         {
@@ -100,15 +110,63 @@ namespace DesktopRemoteApplication
 
                             if (allProcess.Length > 0)
                             {
-                                statusStrip.Items[0].Text = "Status: Application '" + processName + "' Closed";
+                                statusStrip1.Items[0].Text = "Status: Application '" + processName1 + "' Closed";
                             }
                             else
                             {
-                                statusStrip.Items[0].Text = "Status: There is no application running";
+                                statusStrip1.Items[0].Text = "Status: There is no application running";
                             }
                         }
                     };
-                    processChecker.Start();
+                    processChecker1.Start();
+
+                    processChecker2.Interval = 100;
+                    processChecker2.Tick += (s, eventArgs) =>
+                    {
+                        bool isRunning = Process.GetProcessesByName(processName2).Any(p => p.MainModule.FileName == program2);
+                        if (isRunning)
+                        {
+                            statusStrip2.Items[0].Text = "Status: Application '" + processName2 + "' Running";
+                        }
+                        else
+                        {
+                            var allProcess = Process.GetProcesses();
+
+                            if (allProcess.Length > 0)
+                            {
+                                statusStrip2.Items[0].Text = "Status: Application '" + processName2 + "' Closed";
+                            }
+                            else
+                            {
+                                statusStrip2.Items[0].Text = "Status: There is no application running";
+                            }
+                        }
+                    };
+                    processChecker2.Start();
+
+                    processChecker3.Interval = 100;
+                    processChecker3.Tick += (s, eventArgs) =>
+                    {
+                        bool isRunning = Process.GetProcessesByName(processName3).Any(p => p.MainModule.FileName == program3);
+                        if (isRunning)
+                        {
+                            statusStrip3.Items[0].Text = "Status: Application '" + processName3 + "' Running";
+                        }
+                        else
+                        {
+                            var allProcess = Process.GetProcesses();
+
+                            if (allProcess.Length > 0)
+                            {
+                                statusStrip3.Items[0].Text = "Status: Application '" + processName3 + "' Closed";
+                            }
+                            else
+                            {
+                                statusStrip3.Items[0].Text = "Status: There is no application running";
+                            }
+                        }
+                    };
+                    processChecker3.Start();
                 }
             }
             catch (Exception ex)
@@ -121,16 +179,21 @@ namespace DesktopRemoteApplication
         private void StartListening()
         {
             _udpClient = new UdpClient(5555);
-            _remoteEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
+            // _remoteEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
+            _remoteEndPoint = new IPEndPoint(IPAddress.Parse("192.168.3.1"), 5555);
 
             _isListening = true;
+
             new Thread(() =>
             {
                 while (_isListening)
                 {
                     try
                     {
-                        _udpClient.BeginReceive(DataReceived, null);
+                        if (_udpClient != null)
+                        {
+                            _udpClient.BeginReceive(DataReceived, null);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -146,13 +209,88 @@ namespace DesktopRemoteApplication
             {
                 byte[] receivedBytes = _udpClient.EndReceive(asyncResult, ref _remoteEndPoint);
                 string receivedMessage = Encoding.ASCII.GetString(receivedBytes);
+                receivedMessage = receivedMessage.TrimStart('[').TrimEnd(']');
+
+                // receivedMessage = Decrypt(receivedMessage);
+
+                /*if (!receivedMessage.Contains(","))
+                {
+                    dataInBox.Invoke((MethodInvoker)delegate
+                    {
+                        dataInBox.AppendText(receivedMessage + Environment.NewLine);
+
+                    });
+
+                    pathBox.Invoke((MethodInvoker)delegate
+                    {
+                        pathBox.Text = receivedMessage;
+                    });
+
+                    SimulateExecuteButtonClick();
+                }*/
+                string[] substrings = receivedMessage.Split(',');
+
+                if (substrings.Length <= 0 && substrings.Length > 3)
+                {
+                    MessageBox.Show("Data format is not correct, only 1 substrings minimal and 3 substrings maximal are expected but received " + substrings.Length);
+                    return;
+                }
+
+                for (int i = 0; i < substrings.Length; i++)
+                {
+                    string substring = substrings[i].Trim();
+                    if (i == 0)
+                    {
+                        textBox1.Invoke((MethodInvoker)delegate { textBox1.Text = substring; });
+                    }
+                    else if (i == 1)
+                    {
+                        textBox2.Invoke((MethodInvoker)delegate { textBox2.Text = substring; });
+                    }
+                    else if (i == 2)
+                    {
+                        textBox3.Invoke((MethodInvoker)delegate { textBox3.Text = substring; });
+                    }
+                }
+
+                if (substrings.Length == 1)
+                {
+                    StartProcess(substrings[0], null, null);
+                }
+                else if (substrings.Length == 2)
+                {
+                    StartProcess(substrings[0], substrings[1], null);
+                }
+                else if (substrings.Length == 3)
+                {
+                    StartProcess(substrings[0], substrings[1], substrings[2]);
+                }
+
                 dataInBox.Invoke((MethodInvoker)delegate
                 {
-                    dataInBox.AppendText(receivedMessage);
+                    dataInBox.AppendText(receivedMessage + Environment.NewLine);
                 });
             }
         }
-        #endregion
+
+        private string Decrypt(string message)
+        {
+            int shift = 11;
+            char[] characters = message.ToCharArray();
+
+            for (int i = 0; i < characters.Length; i++)
+            {
+                int charValue = (int)characters[i];
+                charValue -= shift;
+                if (charValue < 32)
+                {
+                    charValue = 127 - (32 - charValue);
+                }
+                characters[i] = (char)charValue;
+            }
+            return new string(characters);
+        }
+        #endregion Form Process
 
         #region Button Disable
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
@@ -176,7 +314,7 @@ namespace DesktopRemoteApplication
                 return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
         }
-        #endregion
+        #endregion Button Disable
 
         #region Form Event
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -187,31 +325,58 @@ namespace DesktopRemoteApplication
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             _isListening = false;
-            _udpClient.Close();
+            if (_udpClient != null)
+            {
+                _udpClient.Dispose();
+                _udpClient.Close();
+                _udpClient = null;
+            }
         }
-        #endregion
+
+        #endregion Form Event
 
         #region Button Event
         private void executeButton_Click(object sender, EventArgs e)
         {
-            if (_isRunning) return;
-            StartProcess();
+            /*if (_isRunning) return;
+            string command = pathBox.Text;
+            StartProcess(command);*/
         }
 
         private void receiveButton_Click(object sender, EventArgs e)
         {
             if (_isListening) return;
 
-            statusStrip.Items[1].Text = "Connection Status: Ready to receive UDP data";
+            statusStrip4.Items[0].Text = "Connection Status: Ready to receive UDP data";
 
             StartListening();
         }
 
+        private void SimulateExecuteButtonClick()
+        {
+            /* if (_isRunning) return;
+             string command = pathBox.Text;
+             StartProcess(command);*/
+
+            /*if (executeButton.InvokeRequired)
+            {
+                executeButton.Invoke(new MethodInvoker(delegate { executeButton.PerformClick(); }));
+            }
+            else
+            {
+                executeButton.PerformClick();
+            }*/
+        }
+
         private void clearButton_Click(object sender, EventArgs e)
         {
+            pathBox.Clear();
             dataInBox.Clear();
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
         }
-        #endregion
+        #endregion Button Event
 
         #region Text Box Event
         private void pathBox_DoubleClick(object sender, EventArgs e)
@@ -219,7 +384,7 @@ namespace DesktopRemoteApplication
             using (OpenFileDialog)
             {
                 OpenFileDialog.Title = "Choose EXE File";
-                OpenFileDialog.Filter = "CSV Files (*.exe)|*.exe";
+                OpenFileDialog.Filter = "EXE Files (*.exe)|*.exe";
                 OpenFileDialog.CheckFileExists = true;
                 OpenFileDialog.CheckPathExists = true;
                 OpenFileDialog.FileName = "";
@@ -233,9 +398,13 @@ namespace DesktopRemoteApplication
 
         private void pathBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_isRunning) return;
-            StartProcess();
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (_isRunning) return;
+                string command = pathBox.Text;
+                StartProcess(command);
+            }
         }
-        #endregion           
+        #endregion Text Box Event
     }
 }
