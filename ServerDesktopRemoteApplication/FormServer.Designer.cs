@@ -30,12 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.executeButton = new System.Windows.Forms.Button();
-            this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.pathBox = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.appStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.processChecker1 = new System.Windows.Forms.Timer(this.components);
-            this.processValidation = new System.Windows.Forms.Timer(this.components);
             this.receiveButton = new System.Windows.Forms.Button();
             this.dataInBox = new System.Windows.Forms.TextBox();
             this.clearButton = new System.Windows.Forms.Button();
@@ -68,9 +67,9 @@
             this.executeButton.Visible = false;
             this.executeButton.Click += new System.EventHandler(this.executeButton_Click);
             // 
-            // OpenFileDialog
+            // openFileDialog
             // 
-            this.OpenFileDialog.FileName = "OpenFileDialog";
+            this.openFileDialog.FileName = "openFileDialog";
             // 
             // pathBox
             // 
@@ -230,11 +229,14 @@
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.receiveButton);
             this.Controls.Add(this.executeButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ServerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Server Remote Form";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServerForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ServerForm_FormClosed);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ServerForm_KeyDown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.statusStrip2.ResumeLayout(false);
@@ -251,12 +253,11 @@
         #endregion
 
         private System.Windows.Forms.Button executeButton;
-        private System.Windows.Forms.OpenFileDialog OpenFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TextBox pathBox;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel appStatus;
         private System.Windows.Forms.Timer processChecker1;
-        private System.Windows.Forms.Timer processValidation;
         private System.Windows.Forms.Button receiveButton;
         private System.Windows.Forms.TextBox dataInBox;
         private System.Windows.Forms.Button clearButton;

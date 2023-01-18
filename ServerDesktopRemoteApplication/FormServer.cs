@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlTypes;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -45,6 +46,7 @@ namespace DesktopRemoteApplication
         private UdpClient _udpClient;
         private IPEndPoint _remoteEndPoint;
         private bool _isListening;
+        private int _port = 5555;
         #endregion Form Process Variable and Dependencies
 
         #region Form Process
@@ -55,6 +57,14 @@ namespace DesktopRemoteApplication
             _hookID = SetHook(_proc);
 
             pathBox.KeyDown += pathBox_KeyDown;
+
+            foreach (Control components in this.Controls)
+            {
+                components.Visible = false;
+            }
+
+            this.BackColor = Color.Black;
+            this.FormBorderStyle = FormBorderStyle.None;
         }
 
         private void StartProcess(params string[] ProcessArgs)
@@ -190,9 +200,8 @@ namespace DesktopRemoteApplication
 
         private void StartListening()
         {
-            _udpClient = new UdpClient(5555);
-            // _remoteEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
-            _remoteEndPoint = new IPEndPoint(IPAddress.Parse("192.168.3.1"), 5555);
+            _udpClient = new UdpClient(_port);
+            _remoteEndPoint = new IPEndPoint(IPAddress.Parse("192.168.3.1"), _port);
 
             _isListening = true;
 
@@ -330,6 +339,20 @@ namespace DesktopRemoteApplication
             }
         }
 
+        private void ServerForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.Shift && e.Alt && e.KeyCode == Keys.Enter)
+            {
+                foreach (Control components in this.Controls)
+                {
+                    components.Visible = true;
+                }
+
+                this.BackColor = SystemColors.Control;
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+            }
+        }
+
         #endregion Form Event
 
         #region Button Event
@@ -378,17 +401,17 @@ namespace DesktopRemoteApplication
         #region Text Box Event
         private void pathBox_DoubleClick(object sender, EventArgs e)
         {
-            using (OpenFileDialog)
+            using (openFileDialog)
             {
-                OpenFileDialog.Title = "Choose EXE File";
-                OpenFileDialog.Filter = "EXE Files (*.exe)|*.exe";
-                OpenFileDialog.CheckFileExists = true;
-                OpenFileDialog.CheckPathExists = true;
-                OpenFileDialog.FileName = "";
+                openFileDialog.Title = "Choose EXE File";
+                openFileDialog.Filter = "EXE Files (*.exe)|*.exe";
+                openFileDialog.CheckFileExists = true;
+                openFileDialog.CheckPathExists = true;
+                openFileDialog.FileName = "";
 
-                if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    pathBox.Text = OpenFileDialog.FileName;
+                    pathBox.Text = openFileDialog.FileName;
                 }
             }
         }
