@@ -98,6 +98,10 @@
             this.appStatus.Spring = true;
             this.appStatus.Text = "Third Application Status: ";
             // 
+            // processChecker1
+            // 
+            this.processChecker1.Enabled = true;
+            // 
             // receiveButton
             // 
             this.receiveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
@@ -148,6 +152,14 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(624, 20);
             this.textBox2.TabIndex = 4;
+            // 
+            // processChecker2
+            // 
+            this.processChecker2.Enabled = true;
+            // 
+            // processChecker3
+            // 
+            this.processChecker3.Enabled = true;
             // 
             // statusStrip2
             // 

@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopRemoteApplication
@@ -97,74 +98,85 @@ namespace DesktopRemoteApplication
                     string processName3 = Path.GetFileNameWithoutExtension(program3);
 
                     processChecker1.Interval = 100;
-                    processChecker1.Tick += (s, eventArgs) =>
+                    processChecker1.Tick += async (s, eventArgs) =>
                     {
-                        bool isRunning = Process.GetProcessesByName(processName1).Any(p => p.MainModule.FileName == program1);
-                        if (isRunning)
+                        await Task.Run(() =>
                         {
-                            statusStrip1.Items[0].Text = "Status: Application '" + processName1 + "' Running";
-                        }
-                        else
-                        {
-                            var allProcess = Process.GetProcesses();
-
-                            if (allProcess.Length > 0)
+                            bool isRunning = Process.GetProcessesByName(processName1).Any(p => p.MainModule.FileName == program1);
+                            if (isRunning)
                             {
-                                statusStrip1.Items[0].Text = "Status: Application '" + processName1 + "' Closed";
+                                statusStrip1.Items[0].Text = "Status: Application '" + processName1 + "' Running";
                             }
                             else
                             {
-                                statusStrip1.Items[0].Text = "Status: There is no application running";
+                                var allProcess = Process.GetProcesses();
+
+                                if (allProcess.Length > 0)
+                                {
+                                    statusStrip1.Items[0].Text = "Status: Application '" + processName1 + "' Closed";
+                                }
+                                else
+                                {
+                                    statusStrip1.Items[0].Text = "Status: There is no application running";
+                                }
                             }
-                        }
+                        });
+
                     };
                     processChecker1.Start();
 
                     processChecker2.Interval = 100;
-                    processChecker2.Tick += (s, eventArgs) =>
+                    processChecker2.Tick += async (s, eventArgs) =>
                     {
-                        bool isRunning = Process.GetProcessesByName(processName2).Any(p => p.MainModule.FileName == program2);
-                        if (isRunning)
+                        await Task.Run(() =>
                         {
-                            statusStrip2.Items[0].Text = "Status: Application '" + processName2 + "' Running";
-                        }
-                        else
-                        {
-                            var allProcess = Process.GetProcesses();
-
-                            if (allProcess.Length > 0)
+                            bool isRunning = Process.GetProcessesByName(processName2).Any(p => p.MainModule.FileName == program2);
+                            if (isRunning)
                             {
-                                statusStrip2.Items[0].Text = "Status: Application '" + processName2 + "' Closed";
+                                statusStrip2.Items[0].Text = "Status: Application '" + processName2 + "' Running";
                             }
                             else
                             {
-                                statusStrip2.Items[0].Text = "Status: There is no application running";
+                                var allProcess = Process.GetProcesses();
+
+                                if (allProcess.Length > 0)
+                                {
+                                    statusStrip2.Items[0].Text = "Status: Application '" + processName2 + "' Closed";
+                                }
+                                else
+                                {
+                                    statusStrip2.Items[0].Text = "Status: There is no application running";
+                                }
                             }
-                        }
+                        });
+
                     };
                     processChecker2.Start();
 
                     processChecker3.Interval = 100;
-                    processChecker3.Tick += (s, eventArgs) =>
+                    processChecker3.Tick += async (s, eventArgs) =>
                     {
-                        bool isRunning = Process.GetProcessesByName(processName3).Any(p => p.MainModule.FileName == program3);
-                        if (isRunning)
+                        await Task.Run(() =>
                         {
-                            statusStrip3.Items[0].Text = "Status: Application '" + processName3 + "' Running";
-                        }
-                        else
-                        {
-                            var allProcess = Process.GetProcesses();
-
-                            if (allProcess.Length > 0)
+                            bool isRunning = Process.GetProcessesByName(processName3).Any(p => p.MainModule.FileName == program3);
+                            if (isRunning)
                             {
-                                statusStrip3.Items[0].Text = "Status: Application '" + processName3 + "' Closed";
+                                statusStrip3.Items[0].Text = "Status: Application '" + processName3 + "' Running";
                             }
                             else
                             {
-                                statusStrip3.Items[0].Text = "Status: There is no application running";
+                                var allProcess = Process.GetProcesses();
+
+                                if (allProcess.Length > 0)
+                                {
+                                    statusStrip3.Items[0].Text = "Status: Application '" + processName3 + "' Closed";
+                                }
+                                else
+                                {
+                                    statusStrip3.Items[0].Text = "Status: There is no application running";
+                                }
                             }
-                        }
+                        });
                     };
                     processChecker3.Start();
                 }
@@ -213,21 +225,6 @@ namespace DesktopRemoteApplication
 
                 // receivedMessage = Decrypt(receivedMessage);
 
-                /*if (!receivedMessage.Contains(","))
-                {
-                    dataInBox.Invoke((MethodInvoker)delegate
-                    {
-                        dataInBox.AppendText(receivedMessage + Environment.NewLine);
-
-                    });
-
-                    pathBox.Invoke((MethodInvoker)delegate
-                    {
-                        pathBox.Text = receivedMessage;
-                    });
-
-                    SimulateExecuteButtonClick();
-                }*/
                 string[] substrings = receivedMessage.Split(',');
 
                 if (substrings.Length <= 0 && substrings.Length > 3)
@@ -255,11 +252,11 @@ namespace DesktopRemoteApplication
 
                 if (substrings.Length == 1)
                 {
-                    StartProcess(substrings[0], null, null);
+                    StartProcess(substrings[0]);
                 }
                 else if (substrings.Length == 2)
                 {
-                    StartProcess(substrings[0], substrings[1], null);
+                    StartProcess(substrings[0], substrings[1]);
                 }
                 else if (substrings.Length == 3)
                 {
