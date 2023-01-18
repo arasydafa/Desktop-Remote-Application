@@ -1,6 +1,6 @@
 ﻿namespace DesktopRemoteApplication
 {
-    partial class Form1
+    partial class ServerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -45,11 +45,11 @@
             this.processChecker2 = new System.Windows.Forms.Timer(this.components);
             this.processChecker3 = new System.Windows.Forms.Timer(this.components);
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip3 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip4 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.statusStrip3.SuspendLayout();
@@ -159,6 +159,13 @@
             this.statusStrip2.TabIndex = 5;
             this.statusStrip2.Text = "Second Application Status: ";
             // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(840, 17);
+            this.toolStripStatusLabel3.Spring = true;
+            this.toolStripStatusLabel3.Text = "Second Application Status: ";
+            // 
             // statusStrip3
             // 
             this.statusStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -168,6 +175,13 @@
             this.statusStrip3.Size = new System.Drawing.Size(855, 22);
             this.statusStrip3.TabIndex = 6;
             this.statusStrip3.Text = "First Application Status: ";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(840, 17);
+            this.toolStripStatusLabel2.Spring = true;
+            this.toolStripStatusLabel2.Text = "First Application Status: ";
             // 
             // statusStrip4
             // 
@@ -183,25 +197,11 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(809, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(840, 17);
             this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "Connection Status:";
             // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(840, 17);
-            this.toolStripStatusLabel2.Spring = true;
-            this.toolStripStatusLabel2.Text = "First Application Status: ";
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(840, 17);
-            this.toolStripStatusLabel3.Spring = true;
-            this.toolStripStatusLabel3.Text = "Second Application Status: ";
-            // 
-            // Form1
+            // ServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -218,11 +218,11 @@
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.receiveButton);
             this.Controls.Add(this.executeButton);
-            this.Name = "Form1";
+            this.Name = "ServerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Text = "Server Remote Form";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServerForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ServerForm_FormClosed);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.statusStrip2.ResumeLayout(false);

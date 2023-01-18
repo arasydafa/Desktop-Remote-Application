@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopRemoteApplication", "DesktopRemoteApplication.csproj", "{E80F8003-25FE-4BA3-BAF5-3F63ABB8C401}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerDesktopRemoteApplication", "ServerDesktopRemoteApplication\ServerDesktopRemoteApplication.csproj", "{E80F8003-25FE-4BA3-BAF5-3F63ABB8C401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientDesktopRemoteApplication", "ClientDesktopRemoteApplication\ClientDesktopRemoteApplication.csproj", "{08429E1F-FD14-4AB0-950F-10D5BA7CDF0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E80F8003-25FE-4BA3-BAF5-3F63ABB8C401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E80F8003-25FE-4BA3-BAF5-3F63ABB8C401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E80F8003-25FE-4BA3-BAF5-3F63ABB8C401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08429E1F-FD14-4AB0-950F-10D5BA7CDF0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08429E1F-FD14-4AB0-950F-10D5BA7CDF0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08429E1F-FD14-4AB0-950F-10D5BA7CDF0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08429E1F-FD14-4AB0-950F-10D5BA7CDF0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

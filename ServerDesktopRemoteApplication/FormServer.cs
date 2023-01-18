@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace DesktopRemoteApplication
 {
-    public partial class Form1 : Form
+    public partial class ServerForm : Form
     {
         #region Button Disable variable and Dependencies
         private static int WH_KEYBOARD_LL = 13;
@@ -47,7 +47,7 @@ namespace DesktopRemoteApplication
         #endregion Form Process Variable and Dependencies
 
         #region Form Process
-        public Form1()
+        public ServerForm()
         {
             InitializeComponent();
 
@@ -317,12 +317,12 @@ namespace DesktopRemoteApplication
         #endregion Button Disable
 
         #region Form Event
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void ServerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             UnhookWindowsHookEx(_hookID);
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void ServerForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _isListening = false;
             if (_udpClient != null)
